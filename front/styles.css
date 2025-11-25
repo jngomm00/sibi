@@ -1,0 +1,190 @@
+/* Fuente y estructura general */
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #f5f5f5;
+}
+
+div {
+    padding: 0px 350px;
+}
+
+/* Sección de mensajes */
+section {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+
+}
+
+/* Mensajes */
+.message {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    word-wrap: break-word;
+}
+
+/* Mensaje enviado (derecha) */
+.message.sended {
+    background: #000000;
+    color: white;
+    align-self: flex-end;
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50px); /* empieza desplazado hacia la derecha */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* termina en su posición normal */
+    }
+}
+
+/* Aplicamos la animación a los mensajes enviados */
+.message.sended.new {
+    animation: slideInRight 0.4s ease forwards;
+}
+
+/* Mensaje recibido (izquierda) */
+.message.received {
+    background: #00000008;
+    color: black;
+    align-self: flex-start;
+
+}
+
+.chat-container {
+    padding: 0px 0px 200px 0px;
+}
+
+
+.prompt-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 80px 350px;
+    width: 100%;
+    display: inline;
+    background: transparent;
+    isolation: isolate;
+    /* necesario para que el ::before funcione bien */
+}
+
+.prompt-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* gradiente drástico, blur completo empieza más arriba */
+    mask-image: linear-gradient(to top,
+            rgba(0, 0, 0, 1) 0%,
+            /* fondo totalmente difuminado abajo */
+            rgba(0, 0, 0, 1) 50%,
+            /* rápidamente alcanza el máximo más arriba */
+            rgba(0, 0, 0, 0) 100%
+            /* arriba sin blur */
+        );
+    -webkit-mask-image: linear-gradient(to top,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 1) 50%,
+            rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Barra inferior fija */
+.prompt {
+    position: relative;
+    display: inline;
+    z-index: 2;
+}
+
+.prompt input {
+    width: 70%;
+    padding: 20px;
+    border: 1px solid #00000039;
+    border-radius: 50px;
+    outline: none;
+    display: inline;
+    font-size: 16px;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.26);
+}
+.prompt button {
+    width: 15%;
+    padding: 20px 20px;
+    background: #f7f6f3;
+    color: rgb(0, 0, 0);
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline;
+    border: 1px solid #00000032;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.26);
+    transition: all 0.2s ease; /* animación suave al cambiar estados */
+}
+
+/* cuando se pasa el mouse */
+.prompt button:hover {
+    background: #efeeea;
+}
+
+/* cuando se hace click */
+.prompt button:active {
+    background: #e4e3df; /* un poco más oscuro */
+}
+
+/* cuando el botón recibe focus (tab, etc.) */
+.prompt button:focus {
+    outline: none;                  /* quitar outline por defecto */
+    border: 1px solid rgb(0, 0, 0); /* borde más grueso y más oscuro */
+}
+
+
+.typing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #555;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 80%, 100% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+}

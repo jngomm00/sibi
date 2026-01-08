@@ -72,7 +72,6 @@ async def get_result(link_id: str):
             "message": result["message"]
         })
 
-
 # Servir el front-end
 app.mount("/", StaticFiles(directory=FRONT_DIR, html=True), name="front")
 

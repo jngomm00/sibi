@@ -1,98 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home - TVShow recommender</title>
-
-<style>
-    html, body {
-        margin: 0;
-        height: 100%;
-        font-family: sans-serif;
-        overflow: hidden; /* evita que aparezca scroll */
-    }
-
-    /* Fondo con transición de blur y opacidad */
-    .bg {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-image: url("bg.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        opacity: 0.08;
-        filter: blur(0px);
-        transition: filter 3s ease, opacity 3s ease;
-        z-index: -1;
-    }
-
-    /* Contenedor principal centrado */
-    .container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;       /* Columna: texto arriba, botón abajo */
-        justify-content: center;      /* Centrar vertical */
-        align-items: center;          /* Centrar horizontal */
-        text-align: center;
-        color: white;
-        padding: 20px;
-        box-sizing: border-box;       /* evita que padding aumente tamaño */
-    }
-
-    p {
-        margin: 0 0 20px 0;           /* margen inferior para el botón */
-        font-size: 20px;
-        max-width: 600px;
-        color: black;
-        word-wrap: break-word;        /* evita desbordes de palabra larga */
-    }
-
-    button {
-        padding: 15px 30px;
-        font-size: 18px;
-        border-radius: 100px;
-        border: 4px solid rgba(255, 255, 255, 0);
-        cursor: pointer;
-        color: white;
-        background: black;
-        box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0);
-    }
-
-    button:hover {
-        padding: 15px 30px;
-        font-size: 18px;
-        border-radius: 100px;
-        border: 4px solid white;
-        cursor: pointer;
-        color: white;
-        background: black;
-        box-shadow: 0px 0px 0px 3px black;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - TVShow recommender</title>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            font-family: sans-serif;
+            overflow: hidden;
+        }
+        .bg {
+            position: fixed;
+            width: 150%;
+            height: 150%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.1;
+            filter: blur(0px);
+            transition: filter 3s ease, opacity 3s ease;
+            z-index: -1;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        p, h2 {
+            margin: 0 0 20px 0;
+            max-width: 500px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        p h1, h1, p, h2 {
+            color: #ffffff;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 100px;
+            border: 4px solid rgba(255, 255, 255, 0);
+            cursor: pointer;
+            color: white;
+            background: black;
+        }
+        button:hover {
+            background: #333333;
+        }
+        .cursor-glow {
+            position: fixed;
+            width: 250px;
+            height: 250px;
+            border-radius: 100%;
+            pointer-events: none;
+            background: radial-gradient(
+                    rgba(255, 255, 255, 0.37),
+                    rgba(140, 142, 255, 0.06),
+                    rgba(33, 111, 255, 0.02)
+            );
+            filter: blur(40px);
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Por encima del fondo pero por debajo del contenido */
+        }
+    </style>
 </head>
 <body>
-
-<div class="bg"></div>
-
+<!-- Vídeo de fondo -->
+<div class="cursor-glow"></div>
+<video class="bg" autoplay muted loop playsinline>
+    <source src="bg.mp4" type="video/mp4">
+</video>
 <div class="container">
-<p>¡Bienvenido!<br> Aquí encontrarás recomendaciones de series perfectas para ti. Escribe lo que te apetezca ver y déjate sorprender por nuestras sugerencias.</p>
-<button onclick="document.location='chat.html'">Empezar</button>
+    <p>
+    <h1>¡Bienvenido!</h1>
+    <h2>Aquí encontrarás recomendaciones de series perfectas para ti. Escribe lo que te apetezca ver y déjate sorprender
+        por nuestras sugerencias.</h2></p>
+    <button onclick="document.location='chat.html'">Empezar</button>
 </div>
-
 <script>
-    // Aplica blur y aumenta opacidad gradualmente después de 5 segundos
+    const glow = document.querySelector('.cursor-glow');
+    document.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+</script>
+<script>
     setTimeout(() => {
         const bg = document.querySelector('.bg');
-        bg.style.filter = "blur(100px)";
-        bg.style.opacity = "1";
-    }, 2000);
+        bg.style.filter = "blur(50px)";
+        bg.style.opacity = "0.9";
+    }, 4000);
 </script>
-
 </body>
 </html>

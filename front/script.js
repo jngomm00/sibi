@@ -26,7 +26,7 @@ function addSendedMessage(text) {
 }
 
 function addReceivedMessage(text) {
-    disableSend();
+      disableSend();
     let message = document.createElement("p");
     message.setAttribute("class", "message received");
     chatContainer.appendChild(message);

@@ -7,6 +7,7 @@ from llama_index.core.base.llms.types import ChatMessage
 
 from llama_index.llms.groq import Groq
 
+
 class GroqRecommender:
     def __init__(
             self,
@@ -29,7 +30,6 @@ class GroqRecommender:
 
         self.emb_model = OllamaEmbedding(model_name=model_name_embed)
 
-
         self.llm = Groq(model=model_name_llm, api_key=groq_api_key)
 
     def _coseno_sim(self, a, b):
@@ -37,7 +37,6 @@ class GroqRecommender:
         return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
     def _get_shows(self):
-
         with self.driver.session(database=self.neo4j_db) as session:
             result = session.run("""
                 MATCH (s:TVShow)
